@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Flask Demo</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Flask Dynamic Table</h1>
+
+    <div class="container">
+
+        <form action="/" method="POST">
+            <input type="text" name="task" id="task">
+            <input type="submit" value="Add Task">
+        </form>
+
+        <br>
+
+        <form action="/" method="POST">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Task</th>
+                    <th>Date Added</th>
+                    <th>Select</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.task }}</td>
+                    <td>{{ task.date_created.date() }}</td>
+                    <td><input type="checkbox" name="selected" value="{{ task.id }}"></td>
+                    <td><a href="/delete/{{task.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <input type="submit" value="Delete Selected">
+        </form>
+    </div>
+{% endblock %}
