@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Flask Demo</title>
+    <title>Auto JIRA</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Flask Dynamic Table</h1>
+    <h1>Auto JIRA</h1>
 
     <div class="container">
 
         <form action="/" method="POST">
             <input type="text" name="task" id="task">
-            <input type="submit" value="Add Task">
+            <input type="submit" value="Add Query">
         </form>
 
         <br>
@@ -21,9 +21,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Task</th>
+                    <th>Query</th>
                     <th>Date Added</th>
-                    <th>Select</th>
+                    <th>Clone</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -39,7 +39,15 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <input type="submit" value="Delete Selected">
+            <input type="submit" value="Clone Selected"> <!-- CURRENT FUNCTION IS TO DELETE SELECTED ITEMS -->
         </form>
+        {% if clones %}
+            {% for clone in clones %}
+                <p>{{ clone.id }}</p>
+                <p>{{ clone.task }}</p>
+            {% endfor %}
+        {% else %}
+            <p>No items cloned.</p>
+        {% endif %}
     </div>
 {% endblock %}
