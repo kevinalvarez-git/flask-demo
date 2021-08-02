@@ -43,8 +43,20 @@ def index():
             except:
                 return 'Error at adding task'
         
-        # QUERIES SELECTED TO BE CLONED
-        #elif selected:
+        # QUERIES SELECTED TO BE DELETED (NOW CLONED)
+        elif selected:
+            tasks = Todo.query.order_by(Todo.id).all()
+            
+            # CONVERT STR LIST INTO INT LIST
+            for i in range(0, len(selected)):
+                selected[i] = int(selected[i])
+
+            for task in tasks:
+                if task.id in selected:
+                    clones.append(task)
+            
+            return render_template('index.html', tasks=tasks, clones=clones)
+        
         #    for id in selected:
         #        delete(id)
         #    return redirect("/")
@@ -55,13 +67,7 @@ def index():
     # DISPLAY ALL RECORDS FROM DATABASE
     else:
         tasks = Todo.query.order_by(Todo.id).all()
-        
-        if selected:
-            for task in tasks:
-                if task.id in selected:
-                    clones.append(task)
-
-        return render_template('index.html', tasks = tasks, clones = clones)
+        return render_template('index.html', tasks = tasks)
 
 # DELETE QUERIES
 @app.route('/delete/<int:id>')

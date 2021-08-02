@@ -1,7 +1,8 @@
 # flask-demo
 
-Run 'source env/bin/activate'
-To start application run 'python3 app.py'
+In the main folder:
+First run 'source env/bin/activate'
+Then start application by running 'python3 app.py'
 
 On a web browser open localhost:5000
 
