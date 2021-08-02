@@ -5,6 +5,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
+clones = []
 
 # DATABASE MODEL CLASS
 class Todo(db.Model):
@@ -20,7 +21,7 @@ class Todo(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     selected = []
-    clones   = []
+    #clones   = []
     if request.method == 'POST':
         task_content = None
         selected     = None
@@ -32,7 +33,6 @@ def index():
             new_task = Todo(task=task_content)
         except:
             selected = request.form.getlist('selected')
-            print(selected)
 
         # QUERY ADDED
         if task_content:   
@@ -43,7 +43,7 @@ def index():
             except:
                 return 'Error at adding task'
         
-        # QUERIES SELECTED TO BE DELETED (NOW CLONED)
+        # QUERIES SELECTED TO BE CLONED
         elif selected:
             tasks = Todo.query.order_by(Todo.id).all()
             
@@ -51,9 +51,11 @@ def index():
             for i in range(0, len(selected)):
                 selected[i] = int(selected[i])
 
+            # CREATE LIST OF CLONED ITEMS AVOIDING DUPLICATES
             for task in tasks:
                 if task.id in selected:
-                    clones.append(task)
+                    if task not in clones:
+                        clones.append(task)
             
             return render_template('index.html', tasks=tasks, clones=clones)
         

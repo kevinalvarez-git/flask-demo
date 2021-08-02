@@ -7,7 +7,7 @@ Then start application by running 'python3 app.py'
 On a web browser open localhost:5000
 
 Next steps:
-Update delete route for cloned items.
-Put cloned items on a table.
+Add option to remove a signle item from cloned list
+Add button to clear cloned list
 
 Add pagination after 10 items.
